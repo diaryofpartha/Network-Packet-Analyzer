@@ -1,0 +1,23 @@
+step-by-step breakdown of the libraries needed and how they work in the context of the network packet analyzer program:
+
+Matplotlib: This library is used for creating static, animated, and interactive visualizations in Python. In our program, we use Matplotlib to create a live-updating bar graph to visualize the packet counts. We import matplotlib.pyplot for plotting functions and matplotlib.animation.FuncAnimation to create the live animation.
+
+Scapy: Scapy is a powerful interactive packet manipulation program and library. It is capable of forging or decoding packets of a wide number of protocols, sending them on the wire, capturing them, and matching requests and replies. In our program, we use Scapy's sniff function to capture packets from the network interface.
+Collections: This is a built-in Python library that provides a collection of container data types. We use the Counter class from this library to count the occurrences of each source MAC address in the captured packets.
+
+Psutil: Psutil is a cross-platform library for retrieving information on running processes and system utilization (CPU, memory, disks, network, sensors) in Python. We use it specifically to fetch information about network interfaces available on the system.
+
+
+Here's how the program works step by step:
+
+Fetch Network Interfaces: The program begins by using the psutil library to fetch a list of available network interfaces on the system.
+User Interface for Interface Selection: The program then presents the user with a list of available network interfaces and prompts them to select one.
+
+Packet Capture Loop: Once the user selects an interface, the program enters a loop where it continuously captures packets from the selected interface using Scapy's sniff function. The packet capture is limited to 1 second intervals.
+
+Packet Processing and Visualization: For each captured packet, the program processes the packet to extract the source MAC address. It then updates the packet counts using a Counter object from the collections library. After updating the packet counts, the program generates a bar graph using Matplotlib, showing the top 10 source MAC addresses and their corresponding packet counts. This graph is updated every second to reflect the latest packet counts.
+
+Stopping Capture: The program listens for a close event on the Matplotlib plot window. When the user closes the plot window, the stop_capture_func function is called, which sets a flag (stop_capture) to stop the packet capture loop gracefully.
+Displaying the Plot: Finally, the program displays the live-updating bar graph using Matplotlib's plt.show() function. This function blocks the execution of further code until the plot window is closed.
+
+This step-by-step breakdown should give you a good understanding of how the libraries work together to create a network packet analyzer program in Python.
